@@ -1,0 +1,198 @@
+{
+  "seed_name": "solo_tracks",
+  "version": 1,
+  "target_audio_bitrate_kbps": 128,
+  "notes": "Initial solo test DB. Aim for source streams/previews around 128 kbps or better; high fidelity is not required for gameplay.",
+  "tracks": [
+    {
+      "id": "classical_beethoven_symphony_5_mvt_1",
+      "composer": "Ludwig van Beethoven",
+      "display_title": "Beethoven - Symphony No. 5, I. Allegro con brio",
+      "work": "Symphony No. 5 in C minor, Op. 67",
+      "movement": "I. Allegro con brio",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Iconic four-note opening motif.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening motif" },
+        { "order": 2, "duration_seconds": 10, "hint": "first movement continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "later first movement material" }
+      ]
+    },
+    {
+      "id": "classical_beethoven_fur_elise",
+      "composer": "Ludwig van Beethoven",
+      "display_title": "Beethoven - Fur Elise",
+      "work": "Bagatelle No. 25 in A minor, WoO 59",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Famous solo piano opening.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "theme continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "contrasting section" }
+      ]
+    },
+    {
+      "id": "classical_vivaldi_four_seasons_summer",
+      "composer": "Antonio Vivaldi",
+      "display_title": "Vivaldi - The Four Seasons: Summer",
+      "work": "The Four Seasons: Summer",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "SoundCloud source test track with explicit 10-second offset windows.",
+      "audio_source_status": "source_url_available",
+      "audio_sources": [
+        {
+          "source_name": "soundcloud",
+          "track_url": "https://soundcloud.com/portlandchambermusicfest/vivaldi-four-seasons-summer",
+          "playback_method": "widget_api_seek",
+          "target_bitrate_kbps": 128,
+          "can_stream": true,
+          "can_cache": false
+        }
+      ],
+      "chunk_plan": [
+        { "order": 1, "start_seconds": 64, "duration_seconds": 10, "hint": "1:04-1:14" },
+        { "order": 2, "start_seconds": 173, "duration_seconds": 10, "hint": "2:53-3:03" },
+        { "order": 3, "start_seconds": 201, "duration_seconds": 10, "hint": "3:21-3:31" },
+        { "order": 4, "start_seconds": 238, "duration_seconds": 10, "hint": "3:58-4:08" },
+        { "order": 5, "start_seconds": 291, "duration_seconds": 10, "hint": "4:51-5:01" },
+        { "order": 6, "start_seconds": 337, "duration_seconds": 10, "hint": "5:37-5:47" },
+        { "order": 7, "start_seconds": 384, "duration_seconds": 10, "hint": "6:24-6:34" },
+        { "order": 8, "start_seconds": 426, "duration_seconds": 10, "hint": "7:06-7:16" }
+      ]
+    },
+    {
+      "id": "classical_bach_toccata_and_fugue_d_minor",
+      "composer": "Johann Sebastian Bach",
+      "display_title": "Bach - Toccata and Fugue in D minor",
+      "work": "Toccata and Fugue in D minor, BWV 565",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Iconic organ opening.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening organ flourish" },
+        { "order": 2, "duration_seconds": 10, "hint": "toccata continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "fugal material" }
+      ]
+    },
+    {
+      "id": "classical_mozart_eine_kleine_nachtmusik_mvt_1",
+      "composer": "Wolfgang Amadeus Mozart",
+      "display_title": "Mozart - Eine kleine Nachtmusik, I. Allegro",
+      "work": "Eine kleine Nachtmusik, K. 525",
+      "movement": "I. Allegro",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Famous opening string serenade theme.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "first movement continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "later first movement phrase" }
+      ]
+    },
+    {
+      "id": "jazz_dave_brubeck_take_five",
+      "artist": "The Dave Brubeck Quartet",
+      "display_title": "Dave Brubeck Quartet - Take Five",
+      "work": "Take Five",
+      "genre": "jazz",
+      "difficulty": "easy",
+      "era": "cool jazz",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Famous 5/4 groove and alto sax melody.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main 5/4 groove" },
+        { "order": 2, "duration_seconds": 10, "hint": "alto sax melody" },
+        { "order": 3, "duration_seconds": 10, "hint": "piano and rhythm section" }
+      ]
+    },
+    {
+      "id": "jazz_miles_davis_so_what",
+      "artist": "Miles Davis",
+      "display_title": "Miles Davis - So What",
+      "work": "So What",
+      "genre": "jazz",
+      "difficulty": "easy",
+      "era": "modal jazz",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Recognizable modal bass response and horn entrance.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "bass response motif" },
+        { "order": 2, "duration_seconds": 10, "hint": "horn melody" },
+        { "order": 3, "duration_seconds": 10, "hint": "solo section" }
+      ]
+    },
+    {
+      "id": "jazz_duke_ellington_take_the_a_train",
+      "artist": "Duke Ellington",
+      "display_title": "Duke Ellington - Take the A Train",
+      "work": "Take the A Train",
+      "genre": "jazz",
+      "difficulty": "easy",
+      "era": "swing",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Famous big-band theme.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main big-band theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "sax/brass continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "swing section" }
+      ]
+    },
+    {
+      "id": "jazz_john_coltrane_giant_steps",
+      "artist": "John Coltrane",
+      "display_title": "John Coltrane - Giant Steps",
+      "work": "Giant Steps",
+      "genre": "jazz",
+      "difficulty": "easy",
+      "era": "hard bop",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Fast harmonic movement and saxophone line.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening sax line" },
+        { "order": 2, "duration_seconds": 10, "hint": "rapid changes" },
+        { "order": 3, "duration_seconds": 10, "hint": "solo continuation" }
+      ]
+    },
+    {
+      "id": "jazz_thelonious_monk_round_midnight",
+      "artist": "Thelonious Monk",
+      "display_title": "Thelonious Monk - Round Midnight",
+      "work": "Round Midnight",
+      "genre": "jazz",
+      "difficulty": "easy",
+      "era": "bebop",
+      "target_audio_bitrate_kbps": 128,
+      "recognition_notes": "Distinctive ballad melody and harmony.",
+      "audio_source_status": "needs_source_url",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main ballad theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "piano harmony" },
+        { "order": 3, "duration_seconds": 10, "hint": "melody continuation" }
+      ]
+    }
+  ]
+}

@@ -65,6 +65,7 @@ The repository includes a dependency-free static solo-mode prototype at the repo
 - [../src/solo.js](../src/solo.js) - solo game state and reveal logic
 - [../src/styles.css](../src/styles.css) - app styling
 - [../scripts/static-server.js](../scripts/static-server.js) - optional local static server
+- [../seeds/solo_tracks.json](../seeds/solo_tracks.json) - 5 classical and 5 jazz solo test tracks
 - [../seeds/classical_easy_tracks.json](../seeds/classical_easy_tracks.json) - easy classical seed catalog
 
 The prototype uses the seed catalog and tracks the intended gameplay loop. Approved audio preview URLs still need to be added before it can play real clips.

@@ -4,7 +4,7 @@ const genres = [
   { id: "pop", label: "Pop", enabled: false },
   { id: "hiphop", label: "Hip-hop", enabled: false },
   { id: "electronic", label: "Electronic", enabled: false },
-  { id: "jazz", label: "Jazz", enabled: false },
+  { id: "jazz", label: "Jazz", enabled: true },
   { id: "country", label: "Country", enabled: false },
   { id: "film", label: "Film and TV", enabled: false }
 ];
@@ -81,7 +81,7 @@ function track(id, title, firstHint) {
 
 async function loadTracks() {
   try {
-    const response = await fetch("seeds/classical_easy_tracks.json", { cache: "no-store" });
+    const response = await fetch("seeds/solo_tracks.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Seed request failed: ${response.status}`);
     const data = await response.json();
     state.tracks = data.tracks;
@@ -107,16 +107,17 @@ function renderGenres() {
 }
 
 function startRound() {
-  const pool = state.tracks.filter((item) => {
+  const genrePool = state.tracks.filter((item) => {
     return item.genre === state.selectedGenre && item.difficulty === state.difficulty;
   });
-  if (pool.length < 8) {
-    setRoundMessage("Need at least eight seeded tracks for this mode.", "Add more seed tracks before playing.");
+  const choicePool = state.tracks.filter((item) => item.difficulty === state.difficulty);
+  if (genrePool.length < 1 || choicePool.length < 8) {
+    setRoundMessage("Need at least one track in the genre and eight total choices.", "Add more seed tracks before playing.");
     return;
   }
 
-  state.currentTrack = sample(pool);
-  state.choices = buildChoices(pool, state.currentTrack);
+  state.currentTrack = sample(genrePool);
+  state.choices = buildChoices(choicePool, state.currentTrack);
   state.chunkIndex = 0;
   state.allocatedChunks = [];
   state.wrongChoiceIds = new Set();

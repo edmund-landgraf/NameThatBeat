@@ -4,6 +4,8 @@
 
 NameThatBeat should play short, source-approved windows of audio without storing more audio than needed. For solo mode, the first useful target is a 10-second playable window selected from a source track.
 
+The game does not need high-fidelity audio. For testing and early gameplay, aim for sources around **128 kbps or better**. Lower quality may be acceptable for internal experiments, but 128 kbps is a reasonable default target for public solo rounds.
+
 ## SoundCloud Source Strategy
 
 SoundCloud can be used as an initial playable source when the track owner has made the audio available for streaming and the usage complies with SoundCloud terms and the uploader's rights.
@@ -80,6 +82,7 @@ A track with SoundCloud support should include:
 
 - `audio_source_status`
 - `audio_sources`
+- target quality such as `target_bitrate_kbps: 128`
 - `chunk_plan` windows with `start_seconds` and `duration_seconds`
 
 Example:
@@ -92,6 +95,7 @@ Example:
       "source_name": "soundcloud",
       "track_url": "https://soundcloud.com/portlandchambermusicfest/vivaldi-four-seasons-summer",
       "playback_method": "widget_api_seek",
+      "target_bitrate_kbps": 128,
       "can_stream": true,
       "can_cache": false
     }

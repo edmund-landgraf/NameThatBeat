@@ -167,9 +167,9 @@ Suggested round state:
 
 ## MVP Seed Data
 
-Use [../seeds/classical_easy_tracks.json](../seeds/classical_easy_tracks.json) as the first test catalog.
+Use [../seeds/solo_tracks.json](../seeds/solo_tracks.json) as the first solo test catalog. It starts with 5 classical tracks and 5 jazz tracks.
 
-The seed file intentionally separates track metadata from audio URLs. Before implementation, each seed track needs an approved preview source with rights metadata.
+The seed file intentionally separates track metadata from audio URLs where source URLs are not approved yet. Before public gameplay, each seed track needs an approved preview source with rights metadata. Aim for source quality around 128 kbps or better.
 
 ## Implementation Notes
 
@@ -177,9 +177,8 @@ The first implementation can be deterministic:
 
 - Pick `classical`.
 - Pick `easy`.
-- Shuffle the easy classical seed list.
-- Select one correct track.
-- Select seven distractors from the same seed list.
+- Select one correct track from the chosen genre.
+- Select seven distractors from all easy seeded tracks.
 - Keep the eight choices stable for the full round.
 - Eliminate wrong choices as the player guesses.
 - Reveal another 10-second chunk after every wrong guess.
