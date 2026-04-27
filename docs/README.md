@@ -51,6 +51,7 @@ Short version:
 - [ARCHITECTURE.md](ARCHITECTURE.md) - system architecture and service boundaries
 - [AGENT_SYSTEM.md](AGENT_SYSTEM.md) - async music identification agent design
 - [GAME_DESIGN.md](GAME_DESIGN.md) - player experience and human verification mechanics
+- [SOLO_GAME_MODE.md](SOLO_GAME_MODE.md) - solo practice mode, 10-second reveals, and seed track rules
 - [DATA_MODEL.md](DATA_MODEL.md) - core entities and event model
 - [PRIVACY_LEGAL.md](PRIVACY_LEGAL.md) - privacy, copyright, licensing, and abuse concerns
 - [ROADMAP.md](ROADMAP.md) - phased implementation plan

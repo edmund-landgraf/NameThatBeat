@@ -17,6 +17,7 @@ Avoid a marketing-heavy landing page for the MVP. The product itself is the pitc
 Top-level areas:
 
 - **Play** - known-track challenges and daily rounds
+- **Solo** - single-player practice by genre and difficulty
 - **Identify** - upload or manage unknown samples
 - **Verify** - A/B comparisons and expert queues
 - **Library** - user's submitted samples and resolved matches
@@ -46,6 +47,26 @@ Design notes:
 - The next reveal should feel like part of the round, not a page transition.
 - The user should be able to replay, but replay count should be recorded.
 - Feedback should be immediate for known-track rounds.
+
+### Solo
+
+Purpose: let one player practice against genre-selected easy tracks.
+
+Core elements:
+
+- Genre picker
+- Difficulty picker, starting with easy
+- 10-second audio chunk player
+- At least eight answer choices
+- Next-chunk reveal after wrong answers
+- Score, streak, and chunk count
+
+Design notes:
+
+- Make Classical the first seeded genre for testing.
+- Show that more audio is available after a wrong answer.
+- Record which chunk led to recognition.
+- Keep the answer list stable across reveals.
 
 ### Identify
 
@@ -190,6 +211,7 @@ Suggested routes:
 
 - `/` - playable quick challenge plus submit entry point
 - `/play` - known-track game
+- `/solo` - solo practice mode
 - `/identify` - upload or record unknown sample
 - `/samples` - user's submitted samples
 - `/samples/:id` - sample status and candidates

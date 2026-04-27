@@ -27,6 +27,8 @@ Deliverables:
 
 - Next.js web app
 - User accounts
+- Solo practice mode with genre selection
+- Easy classical seed catalog
 - Upload flow for failed samples
 - Object storage integration
 - Postgres schema

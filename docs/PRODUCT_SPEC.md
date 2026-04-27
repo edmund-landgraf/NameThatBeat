@@ -92,7 +92,16 @@ Needs:
 6. System records answer, latency, confidence, reveal step, and context.
 7. Player receives feedback and score.
 
-### 4. Unknown Sample A/B Verification
+### 4. Solo Practice Mode
+
+1. Player selects genres they know well or want to practice.
+2. System selects easy tracks from those genres.
+3. Player hears a 10-second chunk.
+4. Player chooses from at least eight choices.
+5. If wrong, the system reveals another 10-second chunk.
+6. Round ends when the player answers correctly, skips, fails, or runs out of chunks.
+
+### 5. Unknown Sample A/B Verification
 
 1. Agent narrows an unknown sample to two or more likely candidates.
 2. Qualified players hear the unknown snippet.
@@ -110,6 +119,8 @@ Needs:
 - Sample status page
 - Background job pipeline
 - Candidate table with evidence
+- Solo practice mode with genre selection
+- Easy classical seed catalog
 - Known-track multiple-choice game with at least eight choices
 - Progressive reveal of tiny preview chunks
 - Basic A/B verification for uncertain samples

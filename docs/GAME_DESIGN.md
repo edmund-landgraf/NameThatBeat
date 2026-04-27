@@ -11,6 +11,17 @@ The product should separate normal game rounds from verification rounds internal
 
 ## Core Modes
 
+### Solo Practice
+
+The player chooses genres they know well or want to practice, then plays easy tracks in a single-player loop. The MVP version starts with 10-second chunks: if the player guesses wrong, the next 10-second chunk is revealed until they answer correctly, skip, or run out of chunks.
+
+Useful for:
+
+- Fast MVP testing
+- Player calibration
+- Genre preference collection
+- Seed catalog validation
+
 ### Classic Multiple Choice
 
 The player hears a very small preview chunk from a known track and chooses the correct answer from at least eight options. If no player identifies the track, the round reveals more audio or switches to a different preview chunk.
@@ -49,6 +60,16 @@ Useful for:
 - Samples with poor audio quality
 
 ## Round Structure
+
+### Solo Practice Round
+
+1. Player selects one or more genres.
+2. System selects an easy track from that pool.
+3. Player hears a 10-second chunk.
+4. Player chooses from at least eight answer choices.
+5. If wrong, the next 10-second chunk is revealed.
+6. Continue until correct, skipped, failed, or chunk budget is exhausted.
+7. Record the chunk number that led to the correct answer.
 
 ### Known-Track Round
 
@@ -231,6 +252,8 @@ Avoid overbuilding economy mechanics before the verification loop is proven.
 
 Build:
 
+- Solo practice mode with genre selection
+- Easy classical seed set
 - Eight-choice known-track challenge
 - Progressive reveal using tiny preview chunks
 - Basic score and streak

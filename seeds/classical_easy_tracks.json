@@ -1,0 +1,211 @@
+{
+  "seed_name": "classical_easy_tracks",
+  "version": 1,
+  "notes": "Initial easy classical seed catalog for solo game testing. Audio preview URLs are intentionally omitted until approved source rights are selected.",
+  "tracks": [
+    {
+      "id": "classical_beethoven_symphony_5_mvt_1",
+      "composer": "Ludwig van Beethoven",
+      "display_title": "Beethoven - Symphony No. 5, I. Allegro con brio",
+      "work": "Symphony No. 5 in C minor, Op. 67",
+      "movement": "I. Allegro con brio",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "recognition_notes": "Iconic four-note opening motif.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening motif" },
+        { "order": 2, "duration_seconds": 10, "hint": "continuation of first movement" },
+        { "order": 3, "duration_seconds": 10, "hint": "later first movement material" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_beethoven_fur_elise",
+      "composer": "Ludwig van Beethoven",
+      "display_title": "Beethoven - Fur Elise",
+      "work": "Bagatelle No. 25 in A minor, WoO 59",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "recognition_notes": "Famous solo piano opening.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "theme continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "contrasting section" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_vivaldi_four_seasons_spring_mvt_1",
+      "composer": "Antonio Vivaldi",
+      "display_title": "Vivaldi - The Four Seasons: Spring, I. Allegro",
+      "work": "The Four Seasons: Spring",
+      "movement": "I. Allegro",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "recognition_notes": "Famous bright violin theme.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening ritornello" },
+        { "order": 2, "duration_seconds": 10, "hint": "solo violin passage" },
+        { "order": 3, "duration_seconds": 10, "hint": "return of main theme" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_mozart_eine_kleine_nachtmusik_mvt_1",
+      "composer": "Wolfgang Amadeus Mozart",
+      "display_title": "Mozart - Eine kleine Nachtmusik, I. Allegro",
+      "work": "Eine kleine Nachtmusik, K. 525",
+      "movement": "I. Allegro",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "classical",
+      "recognition_notes": "Famous opening string serenade theme.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "first movement continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "later first movement phrase" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_bach_toccata_and_fugue_d_minor",
+      "composer": "Johann Sebastian Bach",
+      "display_title": "Bach - Toccata and Fugue in D minor",
+      "work": "Toccata and Fugue in D minor, BWV 565",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "recognition_notes": "Iconic organ opening.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "opening organ flourish" },
+        { "order": 2, "duration_seconds": 10, "hint": "toccata continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "fugal material" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_tchaikovsky_1812_overture",
+      "composer": "Pyotr Ilyich Tchaikovsky",
+      "display_title": "Tchaikovsky - 1812 Overture",
+      "work": "1812 Overture, Op. 49",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "romantic",
+      "recognition_notes": "Famous triumphant finale and cannon section.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "recognizable finale material" },
+        { "order": 2, "duration_seconds": 10, "hint": "brass and percussion climax" },
+        { "order": 3, "duration_seconds": 10, "hint": "earlier orchestral material" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_handel_messiah_hallelujah",
+      "composer": "George Frideric Handel",
+      "display_title": "Handel - Messiah: Hallelujah Chorus",
+      "work": "Messiah, HWV 56",
+      "movement": "Hallelujah Chorus",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "recognition_notes": "Highly recognizable choral entrance.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "choral hallelujah entrance" },
+        { "order": 2, "duration_seconds": 10, "hint": "chorus continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "later chorus section" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_rossini_william_tell_overture_finale",
+      "composer": "Gioachino Rossini",
+      "display_title": "Rossini - William Tell Overture: Finale",
+      "work": "William Tell Overture",
+      "movement": "Finale",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "romantic",
+      "recognition_notes": "Famous galloping finale theme.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "galloping finale theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "finale continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "orchestral buildup" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_strauss_blue_danube",
+      "composer": "Johann Strauss II",
+      "display_title": "Strauss II - The Blue Danube",
+      "work": "The Blue Danube, Op. 314",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "romantic",
+      "recognition_notes": "Famous waltz theme.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main waltz theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "waltz continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "introduction or later waltz material" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_bizet_carmen_habanera",
+      "composer": "Georges Bizet",
+      "display_title": "Bizet - Carmen: Habanera",
+      "work": "Carmen",
+      "movement": "Habanera",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "romantic",
+      "recognition_notes": "Famous vocal melody from Carmen.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main habanera melody" },
+        { "order": 2, "duration_seconds": 10, "hint": "vocal continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "orchestral/vocal phrase" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_grieg_in_the_hall_of_the_mountain_king",
+      "composer": "Edvard Grieg",
+      "display_title": "Grieg - In the Hall of the Mountain King",
+      "work": "Peer Gynt Suite No. 1, Op. 46",
+      "movement": "In the Hall of the Mountain King",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "romantic",
+      "recognition_notes": "Repeated theme that accelerates and intensifies.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main repeated theme" },
+        { "order": 2, "duration_seconds": 10, "hint": "faster/louder continuation" },
+        { "order": 3, "duration_seconds": 10, "hint": "climactic section" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    },
+    {
+      "id": "classical_pachelbel_canon_d",
+      "composer": "Johann Pachelbel",
+      "display_title": "Pachelbel - Canon in D",
+      "work": "Canon and Gigue in D major",
+      "movement": "Canon",
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "recognition_notes": "Famous repeating chord progression and canon melody.",
+      "chunk_plan": [
+        { "order": 1, "duration_seconds": 10, "hint": "main canon progression" },
+        { "order": 2, "duration_seconds": 10, "hint": "melodic entrance" },
+        { "order": 3, "duration_seconds": 10, "hint": "fuller canon texture" }
+      ],
+      "audio_source_status": "needs_approved_preview"
+    }
+  ]
+}
