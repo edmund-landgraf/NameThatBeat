@@ -57,26 +57,24 @@ Short version:
 - [PRIVACY_LEGAL.md](PRIVACY_LEGAL.md) - privacy, copyright, licensing, and abuse concerns
 - [ROADMAP.md](ROADMAP.md) - phased implementation plan
 
-## Prototype
+## Current MVP
 
-The repository includes a dependency-free static solo-mode prototype at the repo root:
+The repository now includes a Next.js, React, TypeScript, Tailwind, and shadcn-style MVP:
 
-- [../index.html](../index.html) - browser entry point
-- [../src/solo.js](../src/solo.js) - solo game state and reveal logic
-- [../src/styles.css](../src/styles.css) - app styling
-- [../scripts/static-server.js](../scripts/static-server.js) - optional local static server
+- [../app/page.tsx](../app/page.tsx) - app route entry point
+- [../components/solo-mvp-game.tsx](../components/solo-mvp-game.tsx) - single-track game
+- [../components/ui](../components/ui) - local shadcn-style UI primitives
+- [../app/globals.css](../app/globals.css) - Tailwind theme tokens
 - [../seeds/solo_tracks.json](../seeds/solo_tracks.json) - 5 classical and 5 jazz solo test tracks
-- [../seeds/classical_easy_tracks.json](../seeds/classical_easy_tracks.json) - easy classical seed catalog
 
-The prototype uses the seed catalog and tracks the intended gameplay loop. Approved audio preview URLs still need to be added before it can play real clips.
-
-To run locally without dependencies:
+To run locally:
 
 ```powershell
-node scripts/static-server.js
+npm install
+npm run dev
 ```
 
-Then open `http://127.0.0.1:8080/`. The page also has a built-in fallback seed list, so opening `index.html` directly is enough to test the game logic.
+Then open `http://127.0.0.1:3000/`.
 
 ## MVP Definition
 
