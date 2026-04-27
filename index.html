@@ -3,105 +3,37 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NameThatBeat Solo Mode</title>
+    <title>NameThatBeat MVP</title>
     <link rel="stylesheet" href="src/styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="topbar" aria-label="Game header">
-        <div>
-          <p class="eyebrow">namethatbeat.com</p>
-          <h1>Solo Mode</h1>
-        </div>
-        <div class="scoreboard" aria-label="Current score">
+      <section class="game-card" aria-label="NameThatBeat MVP">
+        <p class="eyebrow">namethatbeat.com</p>
+        <h1>Name That Beat</h1>
+        <p class="lede">MVP checkpoint: one track, one 10-second chunk, eight choices.</p>
+
+        <button class="primary-action" id="start-game" type="button">Start Game</button>
+
+        <section class="play-panel" aria-live="polite">
           <div>
-            <span id="score">0</span>
-            <small>Score</small>
+            <p class="eyebrow">Track Chunk</p>
+            <h2 id="track-status">Press Start Game</h2>
+            <p id="chunk-status">The round will load Vivaldi - The Four Seasons - Summer.</p>
           </div>
+        </section>
+
+        <section class="choice-panel" aria-label="Answer choices">
+          <div class="answer-grid" id="answer-grid"></div>
+        </section>
+
+        <section class="result-panel" aria-live="polite">
           <div>
-            <span id="streak">0</span>
-            <small>Streak</small>
+            <span id="points-earned">0</span>
+            <small>Points earned</small>
           </div>
-          <div>
-            <span id="set-progress">0/5</span>
-            <small>Set</small>
-          </div>
-        </div>
-      </section>
-
-      <section class="setup-panel" aria-label="Solo game setup">
-        <div>
-          <h2>Pick Your Lane</h2>
-          <p>Start with easy classical and jazz tracks. Easy mode can use cross-genre distractors for fair 8-choice rounds.</p>
-        </div>
-        <div class="controls">
-          <fieldset>
-            <legend>Genre</legend>
-            <div class="genre-grid" id="genre-grid"></div>
-          </fieldset>
-          <fieldset>
-            <legend>Difficulty</legend>
-            <div class="segmented">
-              <button class="segment active" type="button" data-difficulty="easy">Easy</button>
-              <button class="segment" type="button" disabled>Medium</button>
-              <button class="segment" type="button" disabled>Hard</button>
-            </div>
-          </fieldset>
-          <button class="primary-action" id="start-round" type="button">Start 5-Track Set</button>
-        </div>
-      </section>
-
-      <section class="instructions-panel" aria-label="Solo game instructions">
-        <h2>How Solo Works</h2>
-        <div class="instruction-grid">
-          <p>Listen to 10 seconds, then pick from 8 choices.</p>
-          <p>Choices appear first. Press Play for each 10-second chunk.</p>
-          <p>Easy mode uses very different choices; hard mode uses similar genres.</p>
-          <p>If 7 guesses are wrong, the last answer is correct for 0 points.</p>
-        </div>
-      </section>
-
-      <section class="round-panel" aria-live="polite">
-        <div class="round-header">
-          <div>
-            <p class="eyebrow">Current Track</p>
-            <h2 id="round-title">Ready</h2>
-          </div>
-          <div class="round-meta">
-            <span id="difficulty-label">Easy</span>
-            <span id="choice-count">8 choices</span>
-            <span id="wrong-count">0 wrong</span>
-          </div>
-        </div>
-
-        <div class="player-panel">
-          <div class="waveform" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <div class="chunk-copy">
-            <p class="eyebrow">10-second play</p>
-            <h3 id="chunk-label">No round loaded</h3>
-            <p id="chunk-status">Choose Classical and start a round.</p>
-          </div>
-          <button class="secondary-action" id="play-chunk" type="button" disabled>Play 10 Seconds</button>
-        </div>
-
-        <div class="reveal-track" id="reveal-track" aria-label="Reveal progress"></div>
-        <div class="answer-grid" id="answer-grid" aria-label="Answer choices"></div>
-
-        <div class="round-actions">
-          <button class="secondary-action" id="skip-round" type="button" disabled>Skip</button>
-          <button class="primary-action" id="next-round" type="button" disabled>Next Track</button>
-        </div>
-      </section>
-
-      <section class="history-panel" aria-label="Round history">
-        <div>
-          <h2>Session</h2>
-          <p id="session-summary">No answers yet.</p>
-        </div>
-        <ol id="history-list"></ol>
+          <p id="result-message">No answer yet.</p>
+        </section>
       </section>
     </main>
 
