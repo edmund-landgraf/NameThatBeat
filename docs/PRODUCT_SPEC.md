@@ -95,13 +95,14 @@ Needs:
 ### 4. Solo Practice Mode
 
 1. Player selects genres they know well or want to practice.
-2. System selects easy tracks from those genres.
-3. Player hears a 10-second chunk.
-4. Player chooses from 8 choices.
-5. If wrong, that choice is eliminated and the system reveals another 10-second chunk.
-6. The player earns more points for earlier correct answers.
-7. If the player makes 7 wrong guesses, the eighth remaining choice is correct and scores 0 points.
-8. Easy mode uses highly different choices; hard mode uses same-genre or similar-genre choices.
+2. System builds a 5-track set from the chosen genre.
+3. For each track, player sees 8 choices with artist/composer and track/work title.
+4. Player presses Play to hear 10 seconds.
+5. Player can answer any time after audio starts.
+6. If wrong, that choice is eliminated and the next Play reveals another 10-second chunk.
+7. The player earns more points for earlier correct answers.
+8. If the player makes 7 wrong guesses, the eighth remaining choice is correct and scores 0 points.
+9. Easy mode uses highly different choices; hard mode uses same-genre or similar-genre choices.
 
 ### 5. Unknown Sample A/B Verification
 

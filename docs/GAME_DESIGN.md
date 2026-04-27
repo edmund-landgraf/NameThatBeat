@@ -13,7 +13,7 @@ The product should separate normal game rounds from verification rounds internal
 
 ### Solo Practice
 
-The player chooses genres they know well or want to practice, then plays tracks in a single-player loop. Each round starts with 10 seconds of audio and 8 choices. Wrong guesses eliminate choices, reveal more audio, and reduce the score. If the player makes 7 wrong guesses, the last remaining choice is correct and the round scores 0.
+The player chooses a genre they know well or want to practice. The game builds a 5-track set from that genre and asks the player to identify those tracks. Each round shows 8 choices first, then the player presses Play for a 10-second chunk. Wrong guesses eliminate choices, unlock the next Play, and reduce the score. If the player makes 7 wrong guesses, the last remaining choice is correct and the round scores 0.
 
 Useful for:
 
@@ -63,15 +63,16 @@ Useful for:
 
 ### Solo Practice Round
 
-1. Player selects one or more genres.
-2. System selects an easy track from that pool.
-3. Player hears a 10-second chunk.
-4. Player chooses from 8 answer choices.
-5. If wrong, that answer is eliminated and the next 10-second chunk is revealed.
-6. Continue until correct, skipped, or 7 wrong guesses leave the correct answer.
-7. Award more points for earlier correct answers.
-8. Award 0 points if the player reaches the final remaining answer.
-9. Record the chunk number and wrong-guess count that led to the correct answer.
+1. Player selects a genre.
+2. System builds a 5-track set from that genre.
+3. System shows 8 answer choices for the current track.
+4. Player presses Play and hears 10 seconds.
+5. Player chooses any answer after audio starts.
+6. If wrong, that answer is eliminated and the next Play reveals another 10 seconds.
+7. Continue until correct, skipped, or 7 wrong guesses leave the correct answer.
+8. Award more points for earlier correct answers.
+9. Award 0 points if the player reaches the final remaining answer.
+10. Record the chunk number and wrong-guess count that led to the correct answer.
 
 ### Known-Track Round
 

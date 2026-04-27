@@ -30,15 +30,18 @@ const state = {
   selectedGenre: "classical",
   difficulty: "easy",
   tracks: [],
+  trackSet: [],
+  setIndex: 0,
   currentTrack: null,
   choices: [],
   chunkIndex: 0,
   allocatedChunks: [],
   wrongChoiceIds: new Set(),
+  hasPlayedCurrentChunk: false,
+  chunkPlayCount: 0,
   score: 0,
   streak: 0,
   rounds: 0,
-  replayCount: 0,
   answered: false,
   history: []
 };
@@ -48,14 +51,14 @@ const els = {
   startRound: document.querySelector("#start-round"),
   score: document.querySelector("#score"),
   streak: document.querySelector("#streak"),
-  roundCount: document.querySelector("#round-count"),
+  setProgress: document.querySelector("#set-progress"),
   roundTitle: document.querySelector("#round-title"),
   difficultyLabel: document.querySelector("#difficulty-label"),
   choiceCount: document.querySelector("#choice-count"),
   wrongCount: document.querySelector("#wrong-count"),
   chunkLabel: document.querySelector("#chunk-label"),
   chunkStatus: document.querySelector("#chunk-status"),
-  replayChunk: document.querySelector("#replay-chunk"),
+  playChunk: document.querySelector("#play-chunk"),
   revealTrack: document.querySelector("#reveal-track"),
   answerGrid: document.querySelector("#answer-grid"),
   skipRound: document.querySelector("#skip-round"),
@@ -106,26 +109,39 @@ function renderGenres() {
   });
 }
 
-function startRound() {
+function startRoundSet() {
   const genrePool = state.tracks.filter((item) => {
     return item.genre === state.selectedGenre && item.difficulty === state.difficulty;
   });
   const choicePool = state.tracks.filter((item) => item.difficulty === state.difficulty);
-  if (genrePool.length < 1 || choicePool.length < 8) {
-    setRoundMessage("Need at least one track in the genre and eight total choices.", "Add more seed tracks before playing.");
+  if (genrePool.length < 5 || choicePool.length < 8) {
+    setRoundMessage("Need five tracks in the genre and eight total choices.", "Add more seed tracks before playing.");
     return;
   }
 
-  state.currentTrack = sample(genrePool);
+  state.trackSet = shuffle(genrePool).slice(0, 5);
+  state.setIndex = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.rounds = 0;
+  state.history = [];
+  renderHistory();
+  loadTrackFromSet();
+}
+
+function loadTrackFromSet() {
+  const choicePool = state.tracks.filter((item) => item.difficulty === state.difficulty);
+  state.currentTrack = state.trackSet[state.setIndex];
   state.choices = buildChoices(choicePool, state.currentTrack);
   state.chunkIndex = 0;
   state.allocatedChunks = [];
   state.wrongChoiceIds = new Set();
-  state.replayCount = 0;
+  state.hasPlayedCurrentChunk = false;
+  state.chunkPlayCount = 0;
   state.answered = false;
   els.skipRound.disabled = false;
   els.nextRound.disabled = true;
-  els.replayChunk.disabled = false;
+  els.playChunk.disabled = false;
   renderRound();
 }
 
@@ -135,13 +151,14 @@ function buildChoices(pool, correctTrack) {
 }
 
 function renderRound() {
-  const chunk = getCurrentChunk();
+  const chunk = state.hasPlayedCurrentChunk ? getCurrentChunk() : getPlannedChunk();
   els.roundTitle.textContent = state.currentTrack ? "Name this track" : "Ready";
   els.difficultyLabel.textContent = capitalize(state.difficulty);
   els.choiceCount.textContent = `${state.choices.length || 8} choices`;
   els.wrongCount.textContent = `${state.wrongChoiceIds.size} wrong`;
-  els.chunkLabel.textContent = `Chunk ${state.chunkIndex + 1} of ${getChunkCount()}: ${chunk?.duration_seconds || 10} seconds`;
+  els.chunkLabel.textContent = `Track ${state.setIndex + 1} of ${state.trackSet.length || 5}: chunk ${state.chunkIndex + 1}`;
   els.chunkStatus.textContent = getChunkStatusText(chunk);
+  els.playChunk.disabled = !state.currentTrack || state.answered || state.hasPlayedCurrentChunk;
   renderRevealTrack();
   renderAnswers();
   renderScore();
@@ -167,7 +184,7 @@ function renderAnswers() {
     button.className = "answer";
     button.type = "button";
     button.textContent = choice.display_title;
-    button.disabled = state.answered || state.wrongChoiceIds.has(choice.id);
+    button.disabled = state.answered || !state.hasPlayedCurrentChunk || state.wrongChoiceIds.has(choice.id);
     if (state.wrongChoiceIds.has(choice.id)) {
       button.classList.add("incorrect");
     }
@@ -177,7 +194,7 @@ function renderAnswers() {
 }
 
 function answer(choice, button) {
-  if (!state.currentTrack || state.answered) return;
+  if (!state.currentTrack || state.answered || !state.hasPlayedCurrentChunk) return;
   const correct = choice.id === state.currentTrack.id;
   button.classList.add(correct ? "correct" : "incorrect");
 
@@ -188,7 +205,7 @@ function answer(choice, button) {
     state.score += scoreForCurrentState();
     els.nextRound.disabled = false;
     els.skipRound.disabled = true;
-    els.replayChunk.disabled = true;
+    els.playChunk.disabled = true;
     disableAnswers();
     markCorrectAnswer();
     pushHistory("correct", choice.display_title);
@@ -198,13 +215,15 @@ function answer(choice, button) {
 
   state.streak = 0;
   state.wrongChoiceIds.add(choice.id);
+  state.hasPlayedCurrentChunk = false;
+  state.chunkIndex = Math.min(state.chunkIndex + 1, getChunkCount() - 1);
 
   if (state.wrongChoiceIds.size >= 7) {
     state.answered = true;
     state.rounds += 1;
     els.nextRound.disabled = false;
     els.skipRound.disabled = true;
-    els.replayChunk.disabled = true;
+    els.playChunk.disabled = true;
     disableAnswers();
     markCorrectAnswer();
     pushHistory("revealed", "Last remaining answer");
@@ -212,9 +231,6 @@ function answer(choice, button) {
     return;
   }
 
-  if (state.chunkIndex < getChunkCount() - 1) {
-    state.chunkIndex += 1;
-  }
   window.setTimeout(renderRound, 400);
 }
 
@@ -225,18 +241,21 @@ function skipRound() {
   state.streak = 0;
   els.nextRound.disabled = false;
   els.skipRound.disabled = true;
-  els.replayChunk.disabled = true;
+  els.playChunk.disabled = true;
   disableAnswers();
   markCorrectAnswer();
   pushHistory("skipped", "Skipped");
   renderScore();
 }
 
-function replayChunk() {
+function playChunk() {
   if (!state.currentTrack) return;
-  state.replayCount += 1;
+  state.hasPlayedCurrentChunk = true;
+  state.chunkPlayCount += 1;
   const chunk = getCurrentChunk();
-  els.chunkStatus.textContent = `Replay ${state.replayCount}. Preview audio is pending; test cue: ${chunk?.hint || "chunk metadata"}.`;
+  els.chunkStatus.textContent = getPlayedChunkStatusText(chunk);
+  els.playChunk.disabled = true;
+  renderAnswers();
 }
 
 function disableAnswers() {
@@ -280,7 +299,7 @@ function renderHistory() {
 function renderScore() {
   els.score.textContent = state.score;
   els.streak.textContent = state.streak;
-  els.roundCount.textContent = state.rounds;
+  els.setProgress.textContent = `${Math.min(state.setIndex + (state.currentTrack ? 1 : 0), state.trackSet.length || 5)}/${state.trackSet.length || 5}`;
 }
 
 function setRoundMessage(title, status) {
@@ -297,21 +316,32 @@ function getCurrentChunk() {
   return state.allocatedChunks[state.chunkIndex];
 }
 
+function getPlannedChunk() {
+  return state.currentTrack?.chunk_plan?.[state.chunkIndex];
+}
+
 function getChunkCount() {
   return state.currentTrack?.chunk_plan?.length || 3;
 }
 
 function getChunkStatusText(chunk) {
   if (!state.currentTrack) return "Choose Classical and start a round.";
+  if (!state.hasPlayedCurrentChunk) {
+    return "Choices are locked. Press Play to hear 10 seconds.";
+  }
+  return getPlayedChunkStatusText(chunk);
+}
+
+function getPlayedChunkStatusText(chunk) {
   const source = getPrimaryAudioSource(state.currentTrack);
   if (source && chunk?.start_seconds !== undefined) {
-    return `SoundCloud window ${formatWindow(chunk.start_seconds, chunk.start_seconds + chunk.duration_seconds)} reserved locally. Playback will seek into the source URL.`;
+    return `Played ${formatWindow(chunk.start_seconds, chunk.start_seconds + chunk.duration_seconds)} from SoundCloud. Choose any answer.`;
   }
   const sourcePending = state.currentTrack.audio_source_status === "needs_approved_preview";
   if (sourcePending) {
-    return `Preview audio pending. Test cue for now: ${chunk?.hint || "chunk metadata"}.`;
+    return `Played test cue: ${chunk?.hint || "chunk metadata"}. Choose any answer.`;
   }
-  return "Playing approved preview audio.";
+  return "Played approved preview audio. Choose any answer.";
 }
 
 function reserveChunkWindow(track, chunkIndex) {
@@ -409,10 +439,28 @@ function capitalize(value) {
 }
 
 function bindEvents() {
-  els.startRound.addEventListener("click", startRound);
-  els.nextRound.addEventListener("click", startRound);
+  els.startRound.addEventListener("click", startRoundSet);
+  els.nextRound.addEventListener("click", nextTrack);
   els.skipRound.addEventListener("click", skipRound);
-  els.replayChunk.addEventListener("click", replayChunk);
+  els.playChunk.addEventListener("click", playChunk);
+}
+
+function nextTrack() {
+  if (state.setIndex < state.trackSet.length - 1) {
+    state.setIndex += 1;
+    loadTrackFromSet();
+    return;
+  }
+  state.currentTrack = null;
+  state.choices = [];
+  state.trackSet = [];
+  els.nextRound.disabled = true;
+  els.skipRound.disabled = true;
+  els.playChunk.disabled = true;
+  setRoundMessage("Set complete", "Pick a genre to start another 5-track set.");
+  els.answerGrid.innerHTML = "";
+  els.revealTrack.innerHTML = "";
+  renderScore();
 }
 
 async function init() {

@@ -6,28 +6,34 @@ Solo mode lets one player practice music identification against tracks selected 
 
 ## Player Flow
 
-1. Player chooses one or more genres they feel good at, or chooses genres they want to practice.
-2. Player starts a solo round set.
-3. System selects an easy track from the chosen genre pool.
-4. Player hears a 10-second chunk.
-5. Player chooses from exactly eight answer choices for the MVP.
-6. If correct, the round ends and the next track begins.
-7. If wrong, that choice is eliminated and the player hears another 10-second chunk from the same track.
-8. The player can keep guessing until they identify the track, skip, or eliminate seven wrong answers.
-9. If the player eliminates seven wrong answers, the eighth remaining choice is correct and the player gets 0 points.
+1. Player chooses a genre they feel good at, such as Classical or Jazz.
+2. The game says, in effect, "Identify these 5 tracks."
+3. The system builds a 5-track set from the chosen genre.
+4. For each track, the player is shown 8 possible answers before audio plays.
+5. Each answer includes track/work title plus artist or composer, such as `Vivaldi - The Four Seasons: Summer`.
+6. The player presses Play.
+7. The player hears 10 seconds of audio.
+8. The player can enter a choice at any time after the first play.
+9. If correct, the round ends and the next track begins.
+10. If wrong, that choice is eliminated and the player can press Play again for the next 10-second chunk.
+11. The player can keep guessing until they identify the track, skip, or eliminate seven wrong answers.
+12. If the player eliminates seven wrong answers, the eighth remaining choice is correct and the player gets 0 points.
 
 ## Player Instructions
 
 Solo mode rules:
 
 1. Pick a genre and difficulty.
-2. Listen to 10 seconds of audio.
-3. Choose from 8 possible answers.
-4. A correct first answer earns the maximum score.
-5. Each wrong answer reveals another 10 seconds and lowers the possible score.
-6. Earlier correct answers are worth more points.
-7. If you make 7 wrong guesses, the last remaining answer is correct, but the round is worth 0 points.
-8. Skip any round you do not want to guess.
+2. The game starts a 5-track set for that genre.
+3. Look at the 8 possible answers.
+4. Press Play to hear 10 seconds of audio.
+5. Choose an answer any time after audio starts.
+6. If wrong, press Play again for another 10 seconds.
+7. A correct first answer earns the maximum score.
+8. Each wrong answer reveals another 10 seconds and lowers the possible score.
+9. Earlier correct answers are worth more points.
+10. If you make 7 wrong guesses, the last remaining answer is correct, but the round is worth 0 points.
+11. Skip any round you do not want to guess.
 
 ## Initial Genre Selection
 
@@ -79,12 +85,12 @@ Hard tracks can include less familiar works, similar-sounding distractors, obscu
 
 ## Chunk Rules
 
-Default solo mode uses 10-second chunks. The first 10-second chunk is played before the player sees or answers the eight choices.
+Default solo mode uses 10-second chunks. The player sees the eight choices first, then presses Play to hear each 10-second chunk.
 
 Recommended round budget:
 
 - Chunk 1: 10 seconds
-- Chunk 2 and later: another 10 seconds after each wrong answer
+- Chunk 2 and later: another 10 seconds after each wrong answer, triggered by the player's next Play press
 - Maximum exposed audio: enough chunks to support up to seven wrong guesses where preview rights allow
 
 The system should store which chunk caused recognition.
@@ -181,7 +187,7 @@ The first implementation can be deterministic:
 - Select seven distractors from all easy seeded tracks.
 - Keep the eight choices stable for the full round.
 - Eliminate wrong choices as the player guesses.
-- Reveal another 10-second chunk after every wrong guess.
+- Enable the next 10-second Play after every wrong guess.
 
 Do not build adaptive difficulty until the basic loop feels good.
 

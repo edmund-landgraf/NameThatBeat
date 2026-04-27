@@ -56,16 +56,19 @@ Core elements:
 
 - Genre picker
 - Difficulty picker, starting with easy
-- 10-second audio chunk player
+- 5-track set progress
+- 10-second Play control
 - 8 answer choices
-- Next-chunk reveal after wrong answers
+- Choices shown before audio starts
+- Next-chunk Play after wrong answers
 - Wrong-choice elimination
 - Score, streak, chunk count, and wrong count
 
 Design notes:
 
 - Make Classical the first seeded genre for testing.
-- Show that more audio is available after a wrong answer.
+- Show that the player is identifying 5 tracks from the selected genre.
+- Show that more audio is available after a wrong answer, but let the player press Play to trigger it.
 - Record which chunk and wrong-guess count led to recognition.
 - Keep the answer list stable across reveals.
 - Explain that 7 wrong guesses leave the correct answer but score 0 points.

@@ -23,8 +23,8 @@
             <small>Streak</small>
           </div>
           <div>
-            <span id="round-count">0</span>
-            <small>Rounds</small>
+            <span id="set-progress">0/5</span>
+            <small>Set</small>
           </div>
         </div>
       </section>
@@ -47,7 +47,7 @@
               <button class="segment" type="button" disabled>Hard</button>
             </div>
           </fieldset>
-          <button class="primary-action" id="start-round" type="button">Start Round</button>
+          <button class="primary-action" id="start-round" type="button">Start 5-Track Set</button>
         </div>
       </section>
 
@@ -55,7 +55,7 @@
         <h2>How Solo Works</h2>
         <div class="instruction-grid">
           <p>Listen to 10 seconds, then pick from 8 choices.</p>
-          <p>Wrong guesses reveal another 10 seconds and lower the score.</p>
+          <p>Choices appear first. Press Play for each 10-second chunk.</p>
           <p>Easy mode uses very different choices; hard mode uses similar genres.</p>
           <p>If 7 guesses are wrong, the last answer is correct for 0 points.</p>
         </div>
@@ -80,11 +80,11 @@
             <span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
           <div class="chunk-copy">
-            <p class="eyebrow">10-second reveal</p>
+            <p class="eyebrow">10-second play</p>
             <h3 id="chunk-label">No round loaded</h3>
             <p id="chunk-status">Choose Classical and start a round.</p>
           </div>
-          <button class="secondary-action" id="replay-chunk" type="button" disabled>Replay Chunk</button>
+          <button class="secondary-action" id="play-chunk" type="button" disabled>Play 10 Seconds</button>
         </div>
 
         <div class="reveal-track" id="reveal-track" aria-label="Reveal progress"></div>
