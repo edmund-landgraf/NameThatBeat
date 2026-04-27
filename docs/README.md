@@ -56,6 +56,26 @@ Short version:
 - [PRIVACY_LEGAL.md](PRIVACY_LEGAL.md) - privacy, copyright, licensing, and abuse concerns
 - [ROADMAP.md](ROADMAP.md) - phased implementation plan
 
+## Prototype
+
+The repository includes a dependency-free static solo-mode prototype at the repo root:
+
+- [../index.html](../index.html) - browser entry point
+- [../src/solo.js](../src/solo.js) - solo game state and reveal logic
+- [../src/styles.css](../src/styles.css) - app styling
+- [../scripts/static-server.js](../scripts/static-server.js) - optional local static server
+- [../seeds/classical_easy_tracks.json](../seeds/classical_easy_tracks.json) - easy classical seed catalog
+
+The prototype uses the seed catalog and tracks the intended gameplay loop. Approved audio preview URLs still need to be added before it can play real clips.
+
+To run locally without dependencies:
+
+```powershell
+node scripts/static-server.js
+```
+
+Then open `http://127.0.0.1:8080/`. The page also has a built-in fallback seed list, so opening `index.html` directly is enough to test the game logic.
+
 ## MVP Definition
 
 The first useful version should prove three things:
