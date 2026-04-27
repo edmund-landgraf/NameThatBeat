@@ -89,6 +89,8 @@ Recommended round budget:
 
 The system should store which chunk caused recognition.
 
+When using SoundCloud or another stream source, each chunk should be represented as a source URL plus a time window, such as `1:04-1:14` or `2:53-3:03`. The client should record requested windows in localStorage so the same player does not repeatedly receive overlapping windows from the same source track.
+
 For tracks with less preview audio available:
 
 - Use fewer chunks.

@@ -55,6 +55,37 @@
       "audio_source_status": "needs_approved_preview"
     },
     {
+      "id": "classical_vivaldi_four_seasons_summer",
+      "composer": "Antonio Vivaldi",
+      "display_title": "Vivaldi - The Four Seasons: Summer",
+      "work": "The Four Seasons: Summer",
+      "movement": null,
+      "genre": "classical",
+      "difficulty": "easy",
+      "era": "baroque",
+      "recognition_notes": "SoundCloud source test track with explicit 10-second offset windows.",
+      "audio_source_status": "source_url_available",
+      "audio_sources": [
+        {
+          "source_name": "soundcloud",
+          "track_url": "https://soundcloud.com/portlandchambermusicfest/vivaldi-four-seasons-summer",
+          "playback_method": "widget_api_seek",
+          "can_stream": true,
+          "can_cache": false
+        }
+      ],
+      "chunk_plan": [
+        { "order": 1, "start_seconds": 64, "duration_seconds": 10, "hint": "1:04-1:14" },
+        { "order": 2, "start_seconds": 173, "duration_seconds": 10, "hint": "2:53-3:03" },
+        { "order": 3, "start_seconds": 201, "duration_seconds": 10, "hint": "3:21-3:31" },
+        { "order": 4, "start_seconds": 238, "duration_seconds": 10, "hint": "3:58-4:08" },
+        { "order": 5, "start_seconds": 291, "duration_seconds": 10, "hint": "4:51-5:01" },
+        { "order": 6, "start_seconds": 337, "duration_seconds": 10, "hint": "5:37-5:47" },
+        { "order": 7, "start_seconds": 384, "duration_seconds": 10, "hint": "6:24-6:34" },
+        { "order": 8, "start_seconds": 426, "duration_seconds": 10, "hint": "7:06-7:16" }
+      ]
+    },
+    {
       "id": "classical_mozart_eine_kleine_nachtmusik_mvt_1",
       "composer": "Wolfgang Amadeus Mozart",
       "display_title": "Mozart - Eine kleine Nachtmusik, I. Allegro",

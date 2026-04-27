@@ -9,6 +9,8 @@ const genres = [
   { id: "film", label: "Film and TV", enabled: false }
 ];
 
+const audioWindowStorageKey = "ntb_audio_windows_v1";
+
 const fallbackTracks = [
   track("classical_beethoven_symphony_5_mvt_1", "Beethoven - Symphony No. 5, I. Allegro con brio", "opening motif"),
   track("classical_beethoven_fur_elise", "Beethoven - Fur Elise", "opening theme"),
@@ -31,6 +33,7 @@ const state = {
   currentTrack: null,
   choices: [],
   chunkIndex: 0,
+  allocatedChunks: [],
   wrongChoiceIds: new Set(),
   score: 0,
   streak: 0,
@@ -115,6 +118,7 @@ function startRound() {
   state.currentTrack = sample(pool);
   state.choices = buildChoices(pool, state.currentTrack);
   state.chunkIndex = 0;
+  state.allocatedChunks = [];
   state.wrongChoiceIds = new Set();
   state.replayCount = 0;
   state.answered = false;
@@ -285,7 +289,11 @@ function setRoundMessage(title, status) {
 }
 
 function getCurrentChunk() {
-  return state.currentTrack?.chunk_plan?.[state.chunkIndex];
+  if (!state.currentTrack) return undefined;
+  if (!state.allocatedChunks[state.chunkIndex]) {
+    state.allocatedChunks[state.chunkIndex] = reserveChunkWindow(state.currentTrack, state.chunkIndex);
+  }
+  return state.allocatedChunks[state.chunkIndex];
 }
 
 function getChunkCount() {
@@ -294,11 +302,91 @@ function getChunkCount() {
 
 function getChunkStatusText(chunk) {
   if (!state.currentTrack) return "Choose Classical and start a round.";
+  const source = getPrimaryAudioSource(state.currentTrack);
+  if (source && chunk?.start_seconds !== undefined) {
+    return `SoundCloud window ${formatWindow(chunk.start_seconds, chunk.start_seconds + chunk.duration_seconds)} reserved locally. Playback will seek into the source URL.`;
+  }
   const sourcePending = state.currentTrack.audio_source_status === "needs_approved_preview";
   if (sourcePending) {
     return `Preview audio pending. Test cue for now: ${chunk?.hint || "chunk metadata"}.`;
   }
   return "Playing approved preview audio.";
+}
+
+function reserveChunkWindow(track, chunkIndex) {
+  const source = getPrimaryAudioSource(track);
+  const chunks = track.chunk_plan || [];
+  const preferred = chunks[chunkIndex];
+  if (!source?.track_url) return preferred;
+
+  const requested = readRequestedWindows();
+  const sourceHistory = requested[source.track_url] || [];
+  const candidate = findNonOverlappingChunk(chunks, sourceHistory, state.allocatedChunks, preferred) || preferred;
+  const start = candidate?.start_seconds;
+  const duration = candidate?.duration_seconds || 10;
+
+  if (start === undefined) return candidate;
+
+  const record = {
+    start_seconds: start,
+    end_seconds: start + duration,
+    track_id: track.id,
+    requested_at: new Date().toISOString()
+  };
+  sourceHistory.push(record);
+
+  requested[source.track_url] = sourceHistory;
+  writeRequestedWindows(requested);
+  return { ...candidate, source_url: source.track_url, source_name: source.source_name };
+}
+
+function findNonOverlappingChunk(chunks, sourceHistory, allocated, preferred) {
+  const ordered = [preferred, ...chunks.filter((chunk) => chunk !== preferred)].filter(Boolean);
+  return ordered.find((chunk) => {
+    if (chunk.start_seconds === undefined) return false;
+    const start = chunk.start_seconds;
+    const end = start + (chunk.duration_seconds || 10);
+    const overlapsHistory = sourceHistory.some((window) => windowsOverlap(start, end, window.start_seconds, window.end_seconds));
+    const overlapsCurrent = allocated.some((window) => {
+      if (window.start_seconds === undefined) return false;
+      return windowsOverlap(start, end, window.start_seconds, window.start_seconds + (window.duration_seconds || 10));
+    });
+    return !overlapsHistory && !overlapsCurrent;
+  });
+}
+
+function windowsOverlap(startA, endA, startB, endB) {
+  return startA < endB && startB < endA;
+}
+
+function readRequestedWindows() {
+  try {
+    return JSON.parse(localStorage.getItem(audioWindowStorageKey)) || {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function writeRequestedWindows(value) {
+  try {
+    localStorage.setItem(audioWindowStorageKey, JSON.stringify(value));
+  } catch (error) {
+    // Ignore localStorage failures; server telemetry can still track windows later.
+  }
+}
+
+function getPrimaryAudioSource(track) {
+  return track.audio_sources?.[0];
+}
+
+function formatWindow(startSeconds, endSeconds) {
+  return `${formatTime(startSeconds)}-${formatTime(endSeconds)}`;
+}
+
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
 }
 
 function scoreForCurrentState() {
