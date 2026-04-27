@@ -57,16 +57,18 @@ Core elements:
 - Genre picker
 - Difficulty picker, starting with easy
 - 10-second audio chunk player
-- At least eight answer choices
+- 8 answer choices
 - Next-chunk reveal after wrong answers
-- Score, streak, and chunk count
+- Wrong-choice elimination
+- Score, streak, chunk count, and wrong count
 
 Design notes:
 
 - Make Classical the first seeded genre for testing.
 - Show that more audio is available after a wrong answer.
-- Record which chunk led to recognition.
+- Record which chunk and wrong-guess count led to recognition.
 - Keep the answer list stable across reveals.
+- Explain that 7 wrong guesses leave the correct answer but score 0 points.
 
 ### Identify
 

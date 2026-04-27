@@ -97,9 +97,11 @@ Needs:
 1. Player selects genres they know well or want to practice.
 2. System selects easy tracks from those genres.
 3. Player hears a 10-second chunk.
-4. Player chooses from at least eight choices.
-5. If wrong, the system reveals another 10-second chunk.
-6. Round ends when the player answers correctly, skips, fails, or runs out of chunks.
+4. Player chooses from 8 choices.
+5. If wrong, that choice is eliminated and the system reveals another 10-second chunk.
+6. The player earns more points for earlier correct answers.
+7. If the player makes 7 wrong guesses, the eighth remaining choice is correct and scores 0 points.
+8. Easy mode uses highly different choices; hard mode uses same-genre or similar-genre choices.
 
 ### 5. Unknown Sample A/B Verification
 

@@ -10,10 +10,24 @@ Solo mode lets one player practice music identification against tracks selected 
 2. Player starts a solo round set.
 3. System selects an easy track from the chosen genre pool.
 4. Player hears a 10-second chunk.
-5. Player chooses from at least eight answer choices.
+5. Player chooses from exactly eight answer choices for the MVP.
 6. If correct, the round ends and the next track begins.
-7. If wrong, the player hears another 10-second chunk from the same track.
-8. The round continues until the player answers correctly, runs out of chunks, skips, or fails the round.
+7. If wrong, that choice is eliminated and the player hears another 10-second chunk from the same track.
+8. The player can keep guessing until they identify the track, skip, or eliminate seven wrong answers.
+9. If the player eliminates seven wrong answers, the eighth remaining choice is correct and the player gets 0 points.
+
+## Player Instructions
+
+Solo mode rules:
+
+1. Pick a genre and difficulty.
+2. Listen to 10 seconds of audio.
+3. Choose from 8 possible answers.
+4. A correct first answer earns the maximum score.
+5. Each wrong answer reveals another 10 seconds and lowers the possible score.
+6. Earlier correct answers are worth more points.
+7. If you make 7 wrong guesses, the last remaining answer is correct, but the round is worth 0 points.
+8. Skip any round you do not want to guess.
 
 ## Initial Genre Selection
 
@@ -42,7 +56,7 @@ Start with three levels:
 
 ### Easy
 
-Easy tracks should be widely recognizable and should use famous sections when possible.
+Easy tracks should be widely recognizable and should use famous sections when possible. Easy answer choices should be very different from each other, such as metal versus pop, classical versus hip-hop, or piano solo versus electronic dance music.
 
 Classical examples:
 
@@ -57,22 +71,21 @@ Classical examples:
 
 ### Medium
 
-Medium tracks can be famous but less immediately obvious, or use less iconic chunks.
+Medium tracks can be famous but less immediately obvious, use less iconic chunks, or include moderately related distractors.
 
 ### Hard
 
-Hard tracks can include less familiar works, similar-sounding distractors, obscure movements, or chunks away from the hook.
+Hard tracks can include less familiar works, similar-sounding distractors, obscure movements, or chunks away from the hook. Hard answer choices should come from the same or similar genre when possible.
 
 ## Chunk Rules
 
-Default solo mode uses 10-second chunks.
+Default solo mode uses 10-second chunks. The first 10-second chunk is played before the player sees or answers the eight choices.
 
 Recommended round budget:
 
 - Chunk 1: 10 seconds
-- Chunk 2: another 10 seconds from a different section when available
-- Chunk 3: another 10 seconds, preferably a more recognizable section
-- Maximum exposed audio: 30 seconds per round for MVP testing
+- Chunk 2 and later: another 10 seconds after each wrong answer
+- Maximum exposed audio: enough chunks to support up to seven wrong guesses where preview rights allow
 
 The system should store which chunk caused recognition.
 
@@ -84,7 +97,7 @@ For tracks with less preview audio available:
 
 ## Answer Choices
 
-Solo multiple-choice rounds should use at least eight choices.
+Solo multiple-choice rounds should use exactly eight choices for the MVP.
 
 For classical tracks, answer choices can be either:
 
@@ -94,7 +107,15 @@ For classical tracks, answer choices can be either:
 
 Recommended MVP format: `Composer - Work or movement`.
 
-Distractors should be plausible:
+Distractors should be controlled by difficulty:
+
+- `easy`: choices should be highly distinct across genre, instrumentation, era, or style.
+- `medium`: choices can share one or two traits, such as era or instrumentation.
+- `hard`: choices should be in the same or similar genre and can be intentionally confusable.
+
+For classical-only seed testing, easy distractors may still come from the classical seed list until cross-genre seed data exists. Once multiple genres are seeded, easy classical rounds should include more obviously different choices.
+
+General distractor rules:
 
 - Same genre
 - Similar era where possible
@@ -106,16 +127,17 @@ Distractors should be plausible:
 
 Use a simple score first:
 
-- Correct on chunk 1: 100 points
-- Correct on chunk 2: 60 points
-- Correct on chunk 3: 30 points
+- Correct first answer after first 10 seconds: 100 points
+- Correct after later chunks: fewer points
+- Each wrong answer lowers the possible score
+- Seven wrong answers leaves only the correct answer and scores 0 points
 - Skip or fail: 0 points
-- Wrong answer penalty: optional for MVP; record wrong answers even if score is not penalized
 
 Track:
 
 - Accuracy
 - Average chunk before correct answer
+- Wrong guesses before correct answer
 - Genre selected
 - Difficulty
 - Time to answer
@@ -134,7 +156,8 @@ Suggested round state:
   "difficulty": "easy",
   "trackId": "classical_beethoven_symphony_5_mvt_1",
   "currentChunkIndex": 0,
-  "maxChunks": 3,
+  "wrongGuessCount": 0,
+  "maxWrongGuesses": 7,
   "choiceCount": 8,
   "status": "awaiting_answer"
 }
@@ -155,13 +178,14 @@ The first implementation can be deterministic:
 - Shuffle the easy classical seed list.
 - Select one correct track.
 - Select seven distractors from the same seed list.
-- Reveal chunks in declared order.
+- Keep the eight choices stable for the full round.
+- Eliminate wrong choices as the player guesses.
+- Reveal another 10-second chunk after every wrong guess.
 
 Do not build adaptive difficulty until the basic loop feels good.
 
 ## Open Questions
 
-- Should a wrong answer immediately reveal the next chunk, or should the player be allowed to keep guessing after hearing the same chunk?
 - Should the UI show composer names before the first answer, or only work titles?
 - Should easy classical use the most famous section first, or start slightly before the famous section?
 - Should a solo round set be 5 tracks, 10 tracks, or endless?

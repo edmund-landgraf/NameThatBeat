@@ -38,6 +38,7 @@ button {
 
 .topbar,
 .setup-panel,
+.instructions-panel,
 .round-panel,
 .history-panel {
   border: 1px solid var(--line);
@@ -107,6 +108,7 @@ h3 {
 }
 
 .setup-panel,
+.instructions-panel,
 .round-panel,
 .history-panel {
   margin-top: 18px;
@@ -121,11 +123,28 @@ h3 {
 }
 
 .setup-panel p,
+.instructions-panel p,
 .history-panel p,
 .chunk-copy p {
   color: var(--muted);
   margin-top: 8px;
   line-height: 1.45;
+}
+
+.instruction-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.instruction-grid p {
+  min-height: 86px;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-2);
 }
 
 .controls {
@@ -341,6 +360,7 @@ legend {
 
   .topbar,
   .setup-panel,
+  .instruction-grid,
   .history-panel,
   .player-panel,
   .round-header {

@@ -31,6 +31,7 @@ const state = {
   currentTrack: null,
   choices: [],
   chunkIndex: 0,
+  wrongChoiceIds: new Set(),
   score: 0,
   streak: 0,
   rounds: 0,
@@ -48,6 +49,7 @@ const els = {
   roundTitle: document.querySelector("#round-title"),
   difficultyLabel: document.querySelector("#difficulty-label"),
   choiceCount: document.querySelector("#choice-count"),
+  wrongCount: document.querySelector("#wrong-count"),
   chunkLabel: document.querySelector("#chunk-label"),
   chunkStatus: document.querySelector("#chunk-status"),
   replayChunk: document.querySelector("#replay-chunk"),
@@ -113,6 +115,7 @@ function startRound() {
   state.currentTrack = sample(pool);
   state.choices = buildChoices(pool, state.currentTrack);
   state.chunkIndex = 0;
+  state.wrongChoiceIds = new Set();
   state.replayCount = 0;
   state.answered = false;
   els.skipRound.disabled = false;
@@ -131,6 +134,7 @@ function renderRound() {
   els.roundTitle.textContent = state.currentTrack ? "Name this track" : "Ready";
   els.difficultyLabel.textContent = capitalize(state.difficulty);
   els.choiceCount.textContent = `${state.choices.length || 8} choices`;
+  els.wrongCount.textContent = `${state.wrongChoiceIds.size} wrong`;
   els.chunkLabel.textContent = `Chunk ${state.chunkIndex + 1} of ${getChunkCount()}: ${chunk?.duration_seconds || 10} seconds`;
   els.chunkStatus.textContent = getChunkStatusText(chunk);
   renderRevealTrack();
@@ -158,7 +162,10 @@ function renderAnswers() {
     button.className = "answer";
     button.type = "button";
     button.textContent = choice.display_title;
-    button.disabled = state.answered;
+    button.disabled = state.answered || state.wrongChoiceIds.has(choice.id);
+    if (state.wrongChoiceIds.has(choice.id)) {
+      button.classList.add("incorrect");
+    }
     button.addEventListener("click", () => answer(choice, button));
     els.answerGrid.appendChild(button);
   });
@@ -173,7 +180,7 @@ function answer(choice, button) {
     state.answered = true;
     state.rounds += 1;
     state.streak += 1;
-    state.score += scoreForChunk(state.chunkIndex);
+    state.score += scoreForCurrentState();
     els.nextRound.disabled = false;
     els.skipRound.disabled = true;
     els.replayChunk.disabled = true;
@@ -185,10 +192,9 @@ function answer(choice, button) {
   }
 
   state.streak = 0;
-  if (state.chunkIndex < getChunkCount() - 1) {
-    state.chunkIndex += 1;
-    window.setTimeout(renderRound, 400);
-  } else {
+  state.wrongChoiceIds.add(choice.id);
+
+  if (state.wrongChoiceIds.size >= 7) {
     state.answered = true;
     state.rounds += 1;
     els.nextRound.disabled = false;
@@ -196,9 +202,15 @@ function answer(choice, button) {
     els.replayChunk.disabled = true;
     disableAnswers();
     markCorrectAnswer();
-    pushHistory("failed", choice.display_title);
+    pushHistory("revealed", "Last remaining answer");
     renderScore();
+    return;
   }
+
+  if (state.chunkIndex < getChunkCount() - 1) {
+    state.chunkIndex += 1;
+  }
+  window.setTimeout(renderRound, 400);
 }
 
 function skipRound() {
@@ -237,12 +249,13 @@ function markCorrectAnswer() {
 }
 
 function pushHistory(result, selectedTitle) {
-  const points = result === "correct" ? scoreForChunk(state.chunkIndex) : 0;
+  const points = result === "correct" ? scoreForCurrentState() : 0;
   state.history.unshift({
     result,
     selectedTitle,
     correctTitle: state.currentTrack.display_title,
     chunk: state.chunkIndex + 1,
+    wrongGuesses: state.wrongChoiceIds.size,
     points
   });
   renderHistory();
@@ -254,7 +267,7 @@ function renderHistory() {
   els.historyList.innerHTML = "";
   state.history.slice(0, 8).forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = `${capitalize(item.result)} on chunk ${item.chunk}: ${item.correctTitle} (${item.points} pts)`;
+    li.textContent = `${capitalize(item.result)} on chunk ${item.chunk} after ${item.wrongGuesses} wrong: ${item.correctTitle} (${item.points} pts)`;
     els.historyList.appendChild(li);
   });
 }
@@ -288,8 +301,10 @@ function getChunkStatusText(chunk) {
   return "Playing approved preview audio.";
 }
 
-function scoreForChunk(index) {
-  return [100, 60, 30][index] || 10;
+function scoreForCurrentState() {
+  const chunkPenalty = state.chunkIndex * 15;
+  const wrongPenalty = state.wrongChoiceIds.size * 10;
+  return Math.max(0, 100 - chunkPenalty - wrongPenalty);
 }
 
 function sample(items) {

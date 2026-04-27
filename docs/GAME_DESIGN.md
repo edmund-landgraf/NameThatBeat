@@ -13,7 +13,7 @@ The product should separate normal game rounds from verification rounds internal
 
 ### Solo Practice
 
-The player chooses genres they know well or want to practice, then plays easy tracks in a single-player loop. The MVP version starts with 10-second chunks: if the player guesses wrong, the next 10-second chunk is revealed until they answer correctly, skip, or run out of chunks.
+The player chooses genres they know well or want to practice, then plays tracks in a single-player loop. Each round starts with 10 seconds of audio and 8 choices. Wrong guesses eliminate choices, reveal more audio, and reduce the score. If the player makes 7 wrong guesses, the last remaining choice is correct and the round scores 0.
 
 Useful for:
 
@@ -66,10 +66,12 @@ Useful for:
 1. Player selects one or more genres.
 2. System selects an easy track from that pool.
 3. Player hears a 10-second chunk.
-4. Player chooses from at least eight answer choices.
-5. If wrong, the next 10-second chunk is revealed.
-6. Continue until correct, skipped, failed, or chunk budget is exhausted.
-7. Record the chunk number that led to the correct answer.
+4. Player chooses from 8 answer choices.
+5. If wrong, that answer is eliminated and the next 10-second chunk is revealed.
+6. Continue until correct, skipped, or 7 wrong guesses leave the correct answer.
+7. Award more points for earlier correct answers.
+8. Award 0 points if the player reaches the final remaining answer.
+9. Record the chunk number and wrong-guess count that led to the correct answer.
 
 ### Known-Track Round
 
@@ -127,8 +129,10 @@ For multiplayer head-to-head rounds:
 For solo multiple-choice rounds:
 
 - Reveal additional chunks after incorrect answers, skipped answers, or timeout.
-- Reduce score as more chunks are revealed.
-- Keep answer options stable during a round unless the game mode explicitly allows narrowing.
+- Reduce score as more chunks are revealed and wrong guesses accumulate.
+- Keep answer options stable during a round.
+- Disable wrong choices after selection.
+- Treat the eighth remaining choice as correct but worth 0 points.
 
 ## Difficulty
 
@@ -149,6 +153,12 @@ Difficulty can be controlled by:
 Good distractors make the game fun and the data useful.
 
 Multiple-choice challenges should use at least eight choices by default. Four-choice rounds are too easy to guess and produce weaker calibration data.
+
+Solo difficulty should mainly change distractor similarity:
+
+- Easy: choices should be very different, such as metal versus pop or classical versus hip-hop.
+- Medium: choices can share some traits, such as era, tempo, instrumentation, or popularity.
+- Hard: choices should come from the same or similar genre and can be intentionally confusable.
 
 Distractors should be selected by:
 
