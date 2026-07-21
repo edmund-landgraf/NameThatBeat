@@ -14,6 +14,7 @@ Use a pragmatic split between a TypeScript product surface and Python audio inte
 | Queue | Redis + BullMQ | Simple background job orchestration for ingestion, fingerprinting, and candidate generation |
 | Workflow engine | Temporal later | Useful once retries, long-running agent workflows, and auditability become central |
 | Audio processing | Python, FFmpeg, librosa, Essentia, pyacoustid/Chromaprint | Best ecosystem for DSP, fingerprints, embeddings, and research workflows |
+| Audio providers | TypeScript provider adapters | Keep source-specific auth, search, metadata normalization, and playback rules isolated |
 | Search | OpenSearch later | Useful for large catalog metadata, source indexing, and explainable candidate retrieval |
 | Auth | Clerk, Auth0, or Lucia/Auth.js | Use managed auth early unless identity customization is strategic |
 | Payments | Stripe | Optional for future premium workflows or creator tools |

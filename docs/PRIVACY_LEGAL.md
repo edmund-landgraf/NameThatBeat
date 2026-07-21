@@ -15,6 +15,7 @@ Questions to resolve:
 - Can snippets be replayed to other users?
 - Can known-track game snippets be played without licenses?
 - Can commerce-preview audio from music purchase sites be cached, chunked, transformed, or replayed inside the game?
+- Can free personal-use downloads be used only for local testing, or also in public game rounds?
 - Do preview rights vary by storefront, artist, label, track, or territory?
 - Are fingerprints and embeddings treated differently from source audio?
 - What takedown process is required?
@@ -23,6 +24,7 @@ Recommended posture:
 
 - Use licensed, public-domain, or explicitly permitted preview audio for known-track game content.
 - Treat music purchase site previews as source-specific permissions, not as blanket rights.
+- Treat "free for personal use" as local/internal only unless the license explicitly permits public interactive use.
 - Keep user-submitted unknown samples private by default.
 - Generate short normalized previews only where policy allows.
 - Build takedown and rights-holder contact flows early.
@@ -101,6 +103,7 @@ Before public launch, define:
 - Short clip duration
 - Progressive reveal that uses the smallest practical audio chunk first
 - Per-source checks for whether preview audio can be cached, clipped, transformed, or streamed only
+- Separate checks for whether downloaded audio can be locally processed, stored, and used in public game rounds
 - No direct public bucket access
 - Watermarking or access logging where appropriate
 - Rights-aware playback checks
@@ -132,6 +135,7 @@ For the MVP:
 
 - Use licensed, public-domain, cleared, or terms-compliant commerce-preview audio for known-track game rounds.
 - Model preview rights explicitly before caching or replaying storefront audio.
+- Use free personal-use downloads for internal testing only unless the license permits public game playback and derived clips.
 - Keep unknown user uploads private to the submitter and internal reviewers.
 - Use human verification only with audio that has been cleared for that use or with carefully reviewed policy.
 - Store fingerprints, features, and embeddings for search, subject to legal review.

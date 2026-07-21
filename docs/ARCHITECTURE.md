@@ -8,13 +8,15 @@ flowchart LR
   API --> DB[(PostgreSQL)]
   API --> Redis[(Redis)]
   API --> Storage[(Object Storage)]
+  API --> Providers[Audio Providers]
   Redis --> Queue[Job Queues]
   Queue --> AudioWorkers[Python Audio Workers]
   Queue --> AgentWorkers[Agent Workers]
   AudioWorkers --> Storage
   AudioWorkers --> DB
   AgentWorkers --> DB
-  AgentWorkers --> External[External Sources and APIs]
+  AgentWorkers --> Providers
+  Providers --> External[External Audio Sources and APIs]
   API --> Game[Game Engine]
   Game --> DB
 ```
@@ -40,6 +42,7 @@ Responsibilities:
 - Authentication and authorization
 - Sample lifecycle APIs
 - Signed upload URL creation
+- Audio provider search and URL resolution orchestration
 - Game challenge generation
 - Vote and response capture
 - Candidate and verification reads
@@ -59,6 +62,19 @@ Responsibilities:
 - Write quality metrics
 
 Workers should be idempotent. Re-running a job should update or replace derived artifacts without duplicating logical records.
+
+### Audio Providers
+
+Responsibilities:
+
+- Search or resolve source-specific audio catalogs
+- Normalize provider metadata into internal track records
+- Report playback capabilities such as seek, preview URL, bitrate, cache policy, and attribution needs
+- Generate or validate 10-second playable windows
+- Keep provider credentials and tokens server-side
+- Degrade gracefully when a provider is unavailable or uncredentialed
+
+SoundCloud is one provider. The game should also support manually seeded URLs, commerce previews, open-licensed catalogs, and direct uploads.
 
 ### Agent Workers
 
@@ -166,6 +182,7 @@ sequenceDiagram
 - Every agent run must be traceable.
 - Every candidate needs evidence and score history.
 - Every human verification decision needs enough metadata to audit.
+- Every provider-sourced track needs provider capability and rights metadata.
 - Audio processing must tolerate retries.
 - External API failures must degrade gracefully.
 - Sample visibility should default to private or limited until legal review policies are explicit.

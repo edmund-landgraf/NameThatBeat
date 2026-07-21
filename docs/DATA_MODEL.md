@@ -115,6 +115,70 @@ Key fields:
 - `expires_at`
 - `can_cache`
 - `can_clip`
+- `can_download`
+- `can_process_locally`
+- `can_store_original`
+- `can_store_derived`
+- `can_use_public_game`
+- `license_url`
+- `license_text_snapshot`
+- `provenance_checked_at`
+- `created_at`
+
+### audio_providers
+
+Represents a provider adapter such as SoundCloud, iTunes previews, open catalogs, or direct uploads.
+
+Key fields:
+
+- `id`
+- `provider_key`
+- `display_name`
+- `provider_type`
+- `auth_required`
+- `supports_search`
+- `supports_url_resolution`
+- `supports_seek`
+- `supports_preview_url`
+- `can_cache_audio_default`
+- `can_cache_metadata_default`
+- `terms_url`
+- `created_at`
+
+### provider_tracks
+
+Represents a provider-specific track candidate normalized into the system.
+
+Key fields:
+
+- `id`
+- `audio_provider_id`
+- `known_track_id`
+- `provider_track_id`
+- `source_url`
+- `playback_method`
+- `title`
+- `artist`
+- `album`
+- `duration_ms`
+- `genre`
+- `tags`
+- `target_bitrate_kbps`
+- `can_seek`
+- `can_download_audio`
+- `can_process_locally`
+- `can_generate_clips`
+- `can_cache_audio`
+- `can_cache_metadata`
+- `can_use_public_game`
+- `commercial_use_allowed`
+- `attribution_required`
+- `rights_status`
+- `license_url`
+- `license_text_snapshot`
+- `retrieved_at`
+- `attribution_payload`
+- `metadata_payload`
 - `created_at`
 
 ### preview_chunks

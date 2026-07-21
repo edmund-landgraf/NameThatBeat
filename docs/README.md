@@ -51,27 +51,50 @@ Short version:
 - [ARCHITECTURE.md](ARCHITECTURE.md) - system architecture and service boundaries
 - [AGENT_SYSTEM.md](AGENT_SYSTEM.md) - async music identification agent design
 - [GAME_DESIGN.md](GAME_DESIGN.md) - player experience and human verification mechanics
+- [GAP_ANALYSIS_NAME_THAT_TUNE.md](GAP_ANALYSIS_NAME_THAT_TUNE.md) - gap analysis vs Name That Tune game-show format
 - [SOLO_GAME_MODE.md](SOLO_GAME_MODE.md) - solo practice mode, 10-second reveals, and seed track rules
+- [AUDIOSOURCES.md](AUDIOSOURCES.md) - audio providers, source options, and provider selection rules
 - [AUDIO_SOURCES.md](AUDIO_SOURCES.md) - SoundCloud/source URL windows and non-overlap tracking
+- [WEB_CLIP_SOURCES.md](WEB_CLIP_SOURCES.md) - design for harvesting random web clips into the game catalog
 - [DATA_MODEL.md](DATA_MODEL.md) - core entities and event model
 - [PRIVACY_LEGAL.md](PRIVACY_LEGAL.md) - privacy, copyright, licensing, and abuse concerns
 - [ROADMAP.md](ROADMAP.md) - phased implementation plan
 
-## Current MVP
+## Current MVP (v0.2)
 
-The repository now includes a Next.js, React, TypeScript, Tailwind, and shadcn-style MVP:
+The repository includes a catalog-driven solo game MVP on Next.js 15 + React 19 + Tailwind:
 
-- [../app/page.tsx](../app/page.tsx) - app route entry point
-- [../components/solo-mvp-game.tsx](../components/solo-mvp-game.tsx) - single-track game
-- [../components/ui](../components/ui) - local shadcn-style UI primitives
-- [../app/globals.css](../app/globals.css) - Tailwind theme tokens
-- [../seeds/solo_tracks.json](../seeds/solo_tracks.json) - 5 classical and 5 jazz solo test tracks
+- [`../src/app/page.tsx`](../src/app/page.tsx) - app entry
+- [`../src/components/solo-game/solo-mvp-game.tsx`](../src/components/solo-game/solo-mvp-game.tsx) - solo set UI
+- [`../src/lib/catalog/`](../src/lib/catalog/) - seed catalog load + solo set builder
+- [`../src/app/api/catalog/route.ts`](../src/app/api/catalog/route.ts) - catalog metadata API
+- [`../src/app/api/game/solo-set/route.ts`](../src/app/api/game/solo-set/route.ts) - builds 5-track / 8-choice sets
+- [`../seeds/solo_tracks.json`](../seeds/solo_tracks.json) - classical, jazz, pop, and rock seed catalog
 
-To run locally:
+### What works now
+
+1. Pick genre + difficulty from the seed catalog.
+2. Start a target 5-track solo set with 8 multiple-choice answers per round.
+3. Play progressive clips that start at 2s and grow after wrong guesses (window history in `localStorage` key `ntb_audio_windows_v1`).
+4. Type the title first (free-text); miss or “Show choices” opens 8-option multiple choice. Wrong answers are eliminated; score drops per miss; skip supported; set summary at the end.
+5. Approved seed URLs play immediately; missing audio is resolved through SoundCloud search when connected.
+6. Live SoundCloud fill-in is used only when the catalog cannot supply enough playable rounds.
+7. **Identify unknown:** upload a clip Shazam failed to recognize, generate catalog/SoundCloud candidates, run A/B human verification, and mark an ID when confident (stored under `.local/samples/`).
+8. **Harvest clips:** pull CC/PD audio from the Internet Archive into `.local/harvest/active.json`, merge into the solo catalog, and play via HTML5 streams (`POST /api/harvest/run`).
+
+### Run locally
 
 ```powershell
 npm install
 npm run dev
+```
+
+Optional SoundCloud credentials (see [`.env.example`](../.env.example)):
+
+```env
+SOUNDCLOUD_CLIENT_ID=
+SOUNDCLOUD_CLIENT_SECRET=
+SOUNDCLOUD_REDIRECT_URI=http://127.0.0.1:3000/api/soundcloud/auth/callback
 ```
 
 Then open `http://127.0.0.1:3000/`.
@@ -84,4 +107,4 @@ The first useful version should prove three things:
 2. Background workers can generate candidates through more than one matching strategy.
 3. Human game interactions improve confidence on ambiguous samples.
 
-The MVP does not need a fully autonomous music discovery engine. It needs a clean ingestion path, repeatable audio analysis, candidate tracking, and a game loop that produces measurable verification signals.
+The playable solo loop in this repo proves the game feel and catalog/audio window model. Upload, accounts, and identification agents remain roadmap work.

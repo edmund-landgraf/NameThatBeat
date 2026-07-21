@@ -9,15 +9,15 @@ Solo mode lets one player practice music identification against tracks selected 
 1. Player chooses a genre they feel good at, such as Classical or Jazz.
 2. The game says, in effect, "Identify these 5 tracks."
 3. The system builds a 5-track set from the chosen genre.
-4. For each track, the player is shown 8 possible answers before audio plays.
-5. Each answer includes track/work title plus artist or composer, such as `Vivaldi - The Four Seasons: Summer`.
-6. The player presses Play.
-7. The player hears 10 seconds of audio.
-8. The player can enter a choice at any time after the first play.
-9. If correct, the round ends and the next track begins.
-10. If wrong, that choice is eliminated and the player can press Play again for the next 10-second chunk.
-11. The player can keep guessing until they identify the track, skip, or eliminate seven wrong answers.
-12. If the player eliminates seven wrong answers, the eighth remaining choice is correct and the player gets 0 points.
+4. The player presses Play and hears a short progressive clip (starting at 2 seconds).
+5. The player types the title (or composer + title). Multiple choice stays hidden.
+6. If the typed title is correct, the round scores and the next track begins.
+7. If the typed title is wrong — or the player presses **Show choices** — eight answers appear.
+8. Multiple-choice wrong guesses eliminate that option and unlock a longer Play.
+9. The player can keep guessing until they identify the track, skip, or eliminate seven wrong answers.
+10. If the player eliminates seven wrong answers, the eighth remaining choice is correct and the round scores 0.
+
+Free-text matching accepts normalized titles, composer+title forms, and light fuzzy matches (`../src/lib/game/title-match.ts`).
 
 ## Player Instructions
 
@@ -25,15 +25,14 @@ Solo mode rules:
 
 1. Pick a genre and difficulty.
 2. The game starts a 5-track set for that genre.
-3. Look at the 8 possible answers.
-4. Press Play to hear 10 seconds of audio.
-5. Choose an answer any time after audio starts.
-6. If wrong, press Play again for another 10 seconds.
-7. A correct first answer earns the maximum score.
-8. Each wrong answer reveals another 10 seconds and lowers the possible score.
-9. Earlier correct answers are worth more points.
-10. If you make 7 wrong guesses, the last remaining answer is correct, but the round is worth 0 points.
-11. Skip any round you do not want to guess.
+3. Press Play for a short clip (clips get longer after wrong guesses).
+4. Type the title when you know it.
+5. Miss a title guess or press Show choices to open the 8-answer list.
+6. A correct first answer earns the maximum score.
+7. Each wrong answer unlocks a longer clip and lowers the possible score.
+8. Earlier correct answers are worth more points.
+9. If you make 7 wrong guesses, the last remaining answer is correct, but the round is worth 0 points.
+10. Skip any round you do not want to guess.
 
 ## Initial Genre Selection
 
@@ -85,13 +84,17 @@ Hard tracks can include less familiar works, similar-sounding distractors, obscu
 
 ## Chunk Rules
 
-Default solo mode uses 10-second chunks. The player sees the eight choices first, then presses Play to hear each 10-second chunk.
+Solo mode uses progressive clip lengths (Milestone 1 / NTT-feel scarcity). The player sees the eight choices first, then presses Play. Window **start offsets** still come from the catalog or generated candidate windows; **duration** follows a play ladder:
 
-Recommended round budget:
+- Play 1: **2 seconds** (short open within the 1–3s band)
+- Play 2: 3 seconds
+- Play 3: 5 seconds
+- Play 4: 7 seconds
+- Play 5+: 10 seconds
 
-- Chunk 1: 10 seconds
-- Chunk 2 and later: another 10 seconds after each wrong answer, triggered by the player's next Play press
-- Maximum exposed audio: enough chunks to support up to seven wrong guesses where preview rights allow
+Wrong answers eliminate a choice and unlock the next Play with a longer clip. Maximum exposed audio still supports up to seven wrong guesses where preview rights allow.
+
+Implemented ladder: `CLIP_DURATION_LADDER_SECONDS` in [`../src/lib/game/scoring.ts`](../src/lib/game/scoring.ts).
 
 The system should store which chunk caused recognition.
 
